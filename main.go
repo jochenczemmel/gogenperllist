@@ -13,7 +13,7 @@ type {{.MyType}}List struct {
 	elements []{{.MyType}}
 }
 
-func NewIntList() *{{.MyType}}List {
+func New{{.MyType}}List() *{{.MyType}}List {
 	return &{{.MyType}}List{[]{{.MyType}}{}}
 }
 
@@ -51,6 +51,12 @@ func (liste *{{.MyType}}List) Pop() {{.MyType}} {
 	last := liste.elements[lastIndex]
 	liste.elements = liste.elements[:lastIndex]
 	return last
+}
+
+func (liste *{{.MyType}}List) Foreach(f func(int, {{.MyType}})) {
+	for index, value := range liste.elements {
+		f(index, value)
+	}
 }`
 
 func main() {
