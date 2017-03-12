@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 	"text/template"
 )
 
-var code = `
-package {{.Package}}
+var code = `package {{.Package}}
 
 type {{.MyType}}List struct {
 	elements []{{.MyType}}
@@ -17,7 +17,7 @@ func NewIntList() *{{.MyType}}List {
 	return &{{.MyType}}List{[]{{.MyType}}{}}
 }
 
-func (liste *{{.MyType}}List) Len() {{.MyType}} {
+func (liste *{{.MyType}}List) Len() int {
 	return len(liste.elements)
 }
 
@@ -51,14 +51,14 @@ func (liste *{{.MyType}}List) Pop() {{.MyType}} {
 	last := liste.elements[lastIndex]
 	liste.elements = liste.elements[:lastIndex]
 	return last
-}
-`
+}`
 
 func main() {
 	parsedTemplate := template.Must(template.New("liste").Parse(code))
 
 	for i := 1; i < len(os.Args); i++ {
-		filename := os.Getenv("GOFILE") + os.Args[i] + "_liste_generated.go"
+		filename := strings.TrimSuffix(os.Getenv("GOFILE"), ".go") + "_" +
+			strings.ToLower(os.Args[i]) + "_liste_generated.go"
 		fid, err := os.Create(filename)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "ERROR: could not create file %s: %s\n",
