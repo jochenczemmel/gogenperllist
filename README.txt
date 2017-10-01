@@ -9,6 +9,11 @@ develop/
 
 	$> go test
 
+	create file ../template.go:
+
+	$> go build
+	$> ./develop
+
 usage/
 	example for using gogenperllist (type: Player)
 	//go:generate gogenperllist Player
