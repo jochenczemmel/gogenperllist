@@ -13,8 +13,8 @@ type {{.MyType}}List struct {
 	elements []{{.MyType}}
 }
 
-// NewIntList creates a new list with optional initial values
-func NewIntList(values ...{{.MyType}}) *{{.MyType}}List {
+// New{{.MyType}}List creates a new list with optional initial values
+func New{{.MyType}}List(values ...{{.MyType}}) *{{.MyType}}List {
 	return &{{.MyType}}List{values}
 }
 
@@ -65,10 +65,36 @@ func (l *{{.MyType}}List) Pop() {{.MyType}} {
 }
 
 // iterate over list elements
-func (l *{{.MyType}}List) Foreach(f func({{.MyType}}, {{.MyType}})) {
+func (l *{{.MyType}}List) Foreach(f func(int, {{.MyType}})) {
 	for index, value := range l.elements {
 		f(index, value)
 	}
+}
+
+// get last element of list
+// true if list is not empty, else false
+func (l *{{.MyType}}List) PopChecked() ({{.MyType}}, bool) {
+	if len(l.elements) == 0 {
+		r := new({{.MyType}})
+		return *r, false
+	}
+	return l.Pop(), true
+}
+
+// get first element of list
+// true if list is not empty, else false
+func (l *{{.MyType}}List) ShiftChecked() ({{.MyType}}, bool) {
+	if len(l.elements) == 0 {
+		r := new({{.MyType}})
+		return *r, false
+	}
+	return l.Shift(), true
+}
+
+// get element at index
+// no error handling, default slice behaviour!
+func (l *{{.MyType}}List) ElementAt(index int) {{.MyType}} {
+	return l.elements[index]
 }
 `
 
