@@ -1,43 +1,46 @@
 /*
-Package develop implements some perl list functions for int lists
+implements some perl list functions for MYTYPE lists
+Base for template for generate tool
 */
-package develop
+package main
 
-type intList struct {
-	elements []int
+type MYTYPE = int
+
+type MYTYPEList struct {
+	elements []MYTYPE
 }
 
-// NewIntList creates a new list with optional initial values
-func NewIntList(values ...int) *intList {
-	return &intList{values}
+// creates a new list with optional initial values
+func NewMYTYPELIST(values ...MYTYPE) *MYTYPEList {
+	return &MYTYPEList{values}
 }
 
 // return len of list
-func (l *intList) Len() int {
+func (l *MYTYPEList) Len() int {
 	return len(l.elements)
 }
 
 // return cap of list
-func (l *intList) Cap() int {
+func (l *MYTYPEList) Cap() int {
 	return cap(l.elements)
 }
 
 // append element to list
-func (l *intList) Push(element int) {
+func (l *MYTYPEList) Push(element MYTYPE) {
 	l.elements = append(l.elements, element)
 }
 
 // prepend element to list
-func (l *intList) Unshift(element int) {
-	newl := append([]int{element}, l.elements...)
+func (l *MYTYPEList) Unshift(element MYTYPE) {
+	newl := append([]MYTYPE{element}, l.elements...)
 	l.elements = newl
 }
 
 // get first element of list
 // or zero value if list is empty
-func (l *intList) Shift() int {
+func (l *MYTYPEList) Shift() MYTYPE {
 	if len(l.elements) == 0 {
-		r := new(int)
+		r := new(MYTYPE)
 		return *r
 	}
 	first := l.elements[0]
@@ -47,9 +50,9 @@ func (l *intList) Shift() int {
 
 // get last element of list
 // or zero value if list is empty
-func (l *intList) Pop() int {
+func (l *MYTYPEList) Pop() MYTYPE {
 	if len(l.elements) == 0 {
-		r := new(int)
+		r := new(MYTYPE)
 		return *r
 	}
 	lastIndex := len(l.elements) - 1
@@ -59,7 +62,7 @@ func (l *intList) Pop() int {
 }
 
 // iterate over list elements
-func (l *intList) Foreach(f func(int, int)) {
+func (l *MYTYPEList) Foreach(f func(int, MYTYPE)) {
 	for index, value := range l.elements {
 		f(index, value)
 	}
@@ -67,9 +70,9 @@ func (l *intList) Foreach(f func(int, int)) {
 
 // get last element of list
 // true if list is not empty, else false
-func (l *intList) PopChecked() (int, bool) {
+func (l *MYTYPEList) PopChecked() (MYTYPE, bool) {
 	if len(l.elements) == 0 {
-		r := new(int)
+		r := new(MYTYPE)
 		return *r, false
 	}
 	return l.Pop(), true
@@ -77,9 +80,9 @@ func (l *intList) PopChecked() (int, bool) {
 
 // get first element of list
 // true if list is not empty, else false
-func (l *intList) ShiftChecked() (int, bool) {
+func (l *MYTYPEList) ShiftChecked() (MYTYPE, bool) {
 	if len(l.elements) == 0 {
-		r := new(int)
+		r := new(MYTYPE)
 		return *r, false
 	}
 	return l.Shift(), true
@@ -87,6 +90,6 @@ func (l *intList) ShiftChecked() (int, bool) {
 
 // get element at index
 // no error handling, default slice behaviour!
-func (l *intList) ElementAt(index int) int {
+func (l *MYTYPEList) ElementAt(index int) MYTYPE {
 	return l.elements[index]
 }

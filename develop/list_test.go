@@ -1,11 +1,11 @@
-package develop
+package main
 
 import (
 	"testing"
 )
 
 func TestPush(t *testing.T) {
-	liste := NewIntList()
+	liste := NewMYTYPELIST()
 	kapazität := cap(liste.elements)
 	if kapazität != 0 {
 		t.Error("ERROR: cap falsch:", kapazität)
@@ -40,7 +40,7 @@ func TestPush(t *testing.T) {
 }
 
 func TestUnshift(t *testing.T) {
-	liste := NewIntList()
+	liste := NewMYTYPELIST()
 	liste.Unshift(6)
 	liste.Unshift(7)
 	liste.Unshift(8)
@@ -72,7 +72,7 @@ func TestUnshift(t *testing.T) {
 }
 
 func TestShift(t *testing.T) {
-	liste := NewIntList(1, 2, 3, 4, 5)
+	liste := NewMYTYPELIST(1, 2, 3, 4, 5)
 	t.Logf("%#v", liste.elements)
 	value := liste.Shift()
 	if value != 1 {
@@ -108,7 +108,7 @@ func TestShift(t *testing.T) {
 }
 
 func TestShiftChecked(t *testing.T) {
-	liste := NewIntList(1, 2, 3, 4, 5)
+	liste := NewMYTYPELIST(1, 2, 3, 4, 5)
 	t.Logf("%#v", liste.elements)
 	value, ok := liste.ShiftChecked()
 	if !ok {
@@ -156,7 +156,7 @@ func TestShiftChecked(t *testing.T) {
 }
 
 func TestPopChecked(t *testing.T) {
-	liste := NewIntList(1, 2, 3, 4, 5)
+	liste := NewMYTYPELIST(1, 2, 3, 4, 5)
 	t.Logf("%#v", liste.elements)
 	value, ok := liste.PopChecked()
 	if value != 5 {
@@ -204,7 +204,7 @@ func TestPopChecked(t *testing.T) {
 	}
 }
 func TestPop(t *testing.T) {
-	liste := NewIntList(1, 2, 3, 4, 5)
+	liste := NewMYTYPELIST(1, 2, 3, 4, 5)
 	t.Logf("%#v", liste.elements)
 	value := liste.Pop()
 	if value != 5 {
@@ -241,7 +241,7 @@ func TestPop(t *testing.T) {
 }
 
 func TestAll(t *testing.T) {
-	liste := NewIntList(1, 2, 3, 4, 5)
+	liste := NewMYTYPELIST(1, 2, 3, 4, 5)
 	t.Logf("%#v", liste.elements)
 	if liste.Len() != 5 {
 		t.Error("ERROR: Anzahl falsch:", liste.Len())
@@ -278,7 +278,7 @@ func TestAll(t *testing.T) {
 }
 
 func TestForeach(t *testing.T) {
-	liste := NewIntList(10, 22, 44, 33, 55)
+	liste := NewMYTYPELIST(10, 22, 44, 33, 55)
 	t.Logf("%#v", liste.elements)
 	if liste.Len() != 5 {
 		t.Error("ERROR: Anzahl falsch:", liste.Len())
@@ -289,7 +289,7 @@ func TestForeach(t *testing.T) {
 }
 
 func TestElementAt(t *testing.T) {
-	liste := NewIntList(10, 22, 44, 33, 55)
+	liste := NewMYTYPELIST(10, 22, 44, 33, 55)
 	t.Logf("%#v", liste.elements)
 	value := liste.ElementAt(3)
 	if value != 33 {
