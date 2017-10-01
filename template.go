@@ -6,34 +6,27 @@ type {{.MyType}}List struct {
 	elements []{{.MyType}}
 }
 
-// New{{.MyType}}List creates a new list with optional initial values
 func New{{.MyType}}List(values ...{{.MyType}}) *{{.MyType}}List {
 	return &{{.MyType}}List{values}
 }
 
-// return len of list
 func (l *{{.MyType}}List) Len() int {
 	return len(l.elements)
 }
 
-// return cap of list
 func (l *{{.MyType}}List) Cap() int {
 	return cap(l.elements)
 }
 
-// append element to list
 func (l *{{.MyType}}List) Push(element {{.MyType}}) {
 	l.elements = append(l.elements, element)
 }
 
-// prepend element to list
 func (l *{{.MyType}}List) Unshift(element {{.MyType}}) {
 	newl := append([]{{.MyType}}{element}, l.elements...)
 	l.elements = newl
 }
 
-// get first element of list
-// or zero value if list is empty
 func (l *{{.MyType}}List) Shift() {{.MyType}} {
 	if len(l.elements) == 0 {
 		r := new({{.MyType}})
@@ -44,8 +37,6 @@ func (l *{{.MyType}}List) Shift() {{.MyType}} {
 	return first
 }
 
-// get last element of list
-// or zero value if list is empty
 func (l *{{.MyType}}List) Pop() {{.MyType}} {
 	if len(l.elements) == 0 {
 		r := new({{.MyType}})
@@ -57,15 +48,12 @@ func (l *{{.MyType}}List) Pop() {{.MyType}} {
 	return last
 }
 
-// iterate over list elements
 func (l *{{.MyType}}List) Foreach(f func(int, {{.MyType}})) {
 	for index, value := range l.elements {
 		f(index, value)
 	}
 }
 
-// get last element of list
-// true if list is not empty, else false
 func (l *{{.MyType}}List) PopChecked() ({{.MyType}}, bool) {
 	if len(l.elements) == 0 {
 		r := new({{.MyType}})
@@ -74,8 +62,6 @@ func (l *{{.MyType}}List) PopChecked() ({{.MyType}}, bool) {
 	return l.Pop(), true
 }
 
-// get first element of list
-// true if list is not empty, else false
 func (l *{{.MyType}}List) ShiftChecked() ({{.MyType}}, bool) {
 	if len(l.elements) == 0 {
 		r := new({{.MyType}})
@@ -84,9 +70,8 @@ func (l *{{.MyType}}List) ShiftChecked() ({{.MyType}}, bool) {
 	return l.Shift(), true
 }
 
-// get element at index
-// no error handling, default slice behaviour!
 func (l *{{.MyType}}List) ElementAt(index int) {{.MyType}} {
 	return l.elements[index]
 }
+
 `

@@ -14,7 +14,7 @@ func main() {
 	write(newcontent, "../template.go")
 }
 
-func write(code []byte, filename string) {
+func write(code, filename string) {
 
 	fid, err := os.Create("../template.go")
 	if err != nil {
@@ -25,7 +25,9 @@ func write(code []byte, filename string) {
 
 	defer fid.Close()
 
-	_, err = fid.Write(code)
+	code = "package main\n\nvar code = `" + code + "\n`"
+
+	_, err = fid.Write([]byte(code))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "ERROR: could not write file %s: %s\n",
 			filename, err)
@@ -34,13 +36,14 @@ func write(code []byte, filename string) {
 
 }
 
-func replace(in []byte) []byte {
-	var out []byte
-	regexp.MustCompile("MYTYPE").ReplaceAll(in, out)
-	return out
+func replace(in string) string {
+	out := regexp.MustCompile("package main").ReplaceAllString(in,
+		"package {{.Package}}")
+	return regexp.MustCompile("MYTYPE").ReplaceAllString(out,
+		"{{.MyType}}")
 }
 
-func readFile(filename string) []byte {
+func readFile(filename string) string {
 
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -49,5 +52,5 @@ func readFile(filename string) []byte {
 		os.Exit(2)
 	}
 
-	return content
+	return string(content)
 }
