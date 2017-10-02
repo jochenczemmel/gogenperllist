@@ -65,7 +65,7 @@ func (l *PlayerList) Foreach(f func(int, Player)) {
 	}
 }
 
-// Pop returns the last element and removes it from the list
+// PopChecked returns the last element and removes it from the list
 // returns the value and true if the list contains values,
 // else the zero value and false
 func (l *PlayerList) PopChecked() (Player, bool) {
@@ -76,7 +76,7 @@ func (l *PlayerList) PopChecked() (Player, bool) {
 	return l.Pop(), true
 }
 
-// Shift returns the first element and removes it from the list
+// ShiftChecked returns the first element and removes it from the list
 // returns the value and true if the list contains values,
 // else the zero value and false
 func (l *PlayerList) ShiftChecked() (Player, bool) {

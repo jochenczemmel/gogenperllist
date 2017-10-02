@@ -65,7 +65,7 @@ func (l *MYTYPEList) Foreach(f func(int, MYTYPE)) {
 	}
 }
 
-// Pop returns the last element and removes it from the list
+// PopChecked returns the last element and removes it from the list
 // returns the value and true if the list contains values,
 // else the zero value and false
 func (l *MYTYPEList) PopChecked() (MYTYPE, bool) {
@@ -76,7 +76,7 @@ func (l *MYTYPEList) PopChecked() (MYTYPE, bool) {
 	return l.Pop(), true
 }
 
-// Shift returns the first element and removes it from the list
+// ShiftChecked returns the first element and removes it from the list
 // returns the value and true if the list contains values,
 // else the zero value and false
 func (l *MYTYPEList) ShiftChecked() (MYTYPE, bool) {

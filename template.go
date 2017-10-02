@@ -67,7 +67,7 @@ func (l *{{.MyType}}List) Foreach(f func(int, {{.MyType}})) {
 	}
 }
 
-// Pop returns the last element and removes it from the list
+// PopChecked returns the last element and removes it from the list
 // returns the value and true if the list contains values,
 // else the zero value and false
 func (l *{{.MyType}}List) PopChecked() ({{.MyType}}, bool) {
@@ -78,7 +78,7 @@ func (l *{{.MyType}}List) PopChecked() ({{.MyType}}, bool) {
 	return l.Pop(), true
 }
 
-// Shift returns the first element and removes it from the list
+// ShiftChecked returns the first element and removes it from the list
 // returns the value and true if the list contains values,
 // else the zero value and false
 func (l *{{.MyType}}List) ShiftChecked() ({{.MyType}}, bool) {

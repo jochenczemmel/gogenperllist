@@ -4,8 +4,9 @@ import (
 	"fmt"
 )
 
-// content type of perl list
 //go:generate gogenperllist Player
+
+// Player is the content type of the perl list
 type Player struct {
 	Name string
 	Club string
