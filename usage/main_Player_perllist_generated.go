@@ -36,8 +36,7 @@ func (l *PlayerList) Unshift(element Player) {
 // returns zero value if list is empty
 func (l *PlayerList) Shift() Player {
 	if len(l.elements) == 0 {
-		r := new(Player)
-		return *r
+		return *new(Player)
 	}
 	first := l.elements[0]
 	l.elements = l.elements[1:]
@@ -48,8 +47,7 @@ func (l *PlayerList) Shift() Player {
 // returns zero value if list is empty
 func (l *PlayerList) Pop() Player {
 	if len(l.elements) == 0 {
-		r := new(Player)
-		return *r
+		return *new(Player)
 	}
 	lastIndex := len(l.elements) - 1
 	last := l.elements[lastIndex]
@@ -91,5 +89,31 @@ func (l *PlayerList) ShiftChecked() (Player, bool) {
 // It panics if index is invalid (default slice behaviour)
 func (l *PlayerList) ElementAt(index int) Player {
 	return l.elements[index]
+}
+
+// Grep iterates over the slice by calling the given function
+// providing the slice index and the value
+// and returning a new List that contains all element where
+// the given function returned true
+func (l *PlayerList) Grep(f func(int, Player) bool) PlayerList {
+	result := PlayerList{}
+	for index, value := range l.elements {
+		if f(index, value) {
+			result.elements = append(result.elements, value)
+		}
+	}
+	return result
+}
+
+// Map iterates over the slice by calling the given function
+// providing the slice index and the value
+// and returning a new List that contains all element
+// with the value returned by the function
+func (l *PlayerList) Map(f func(int, Player) Player) PlayerList {
+	result := PlayerList{}
+	for index, value := range l.elements {
+		result.elements = append(result.elements, f(index, value))
+	}
+	return result
 }
 

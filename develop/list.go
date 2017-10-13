@@ -36,8 +36,7 @@ func (l *MYTYPEList) Unshift(element MYTYPE) {
 // returns zero value if list is empty
 func (l *MYTYPEList) Shift() MYTYPE {
 	if len(l.elements) == 0 {
-		r := new(MYTYPE)
-		return *r
+		return *new(MYTYPE)
 	}
 	first := l.elements[0]
 	l.elements = l.elements[1:]
@@ -48,8 +47,7 @@ func (l *MYTYPEList) Shift() MYTYPE {
 // returns zero value if list is empty
 func (l *MYTYPEList) Pop() MYTYPE {
 	if len(l.elements) == 0 {
-		r := new(MYTYPE)
-		return *r
+		return *new(MYTYPE)
 	}
 	lastIndex := len(l.elements) - 1
 	last := l.elements[lastIndex]
@@ -91,4 +89,30 @@ func (l *MYTYPEList) ShiftChecked() (MYTYPE, bool) {
 // It panics if index is invalid (default slice behaviour)
 func (l *MYTYPEList) ElementAt(index int) MYTYPE {
 	return l.elements[index]
+}
+
+// Grep iterates over the slice by calling the given function
+// providing the slice index and the value
+// and returning a new List that contains all element where
+// the given function returned true
+func (l *MYTYPEList) Grep(f func(int, MYTYPE) bool) MYTYPEList {
+	result := MYTYPEList{}
+	for index, value := range l.elements {
+		if f(index, value) {
+			result.elements = append(result.elements, value)
+		}
+	}
+	return result
+}
+
+// Map iterates over the slice by calling the given function
+// providing the slice index and the value
+// and returning a new List that contains all element
+// with the value returned by the function
+func (l *MYTYPEList) Map(f func(int, MYTYPE) MYTYPE) MYTYPEList {
+	result := MYTYPEList{}
+	for index, value := range l.elements {
+		result.elements = append(result.elements, f(index, value))
+	}
+	return result
 }

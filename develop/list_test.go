@@ -311,3 +311,68 @@ func TestElementAt(t *testing.T) {
 	}
 	callChecked()
 }
+
+func TestGrep(t *testing.T) {
+	liste := NewMYTYPEList(1, 2, 3, 4, 5, 6, 7)
+	t.Logf("%#v", liste.elements)
+	gerade := liste.Grep(func(i int, v int) bool {
+		if v%2 == 0 {
+			return true
+		}
+		return false
+	})
+	t.Logf("gerade: %#v", gerade.elements)
+	if gerade.Len() != 3 {
+		t.Errorf("ERROR: Anzahl gerade falsch: %d %#v", gerade.Len(), gerade)
+	}
+	ungerade := liste.Grep(func(i int, v int) bool {
+		if v%2 != 0 {
+			return true
+		}
+		return false
+	})
+	t.Logf("ungerade: %#v", ungerade.elements)
+	if ungerade.Len() != 4 {
+		t.Errorf("ERROR: Anzahl ungerade falsch: %d %#v", ungerade.Len(),
+			ungerade)
+	}
+	alle := liste.Grep(func(i int, v int) bool {
+		if v <= 100 {
+			return true
+		}
+		return false
+	})
+	if alle.Len() != 7 {
+		t.Errorf("ERROR: Anzahl alle falsch: %d %#v", alle.Len(),
+			alle)
+	}
+	leer := liste.Grep(func(i int, v int) bool {
+		if v == 100 {
+			return true
+		}
+		return false
+	})
+	if leer.Len() != 0 {
+		t.Errorf("ERROR: Anzahl leer falsch: %d %#v", leer.Len(),
+			ungerade)
+	}
+}
+func TestMap(t *testing.T) {
+	liste := NewMYTYPEList(1, 2, 3, 4, 5, 6, 7)
+	t.Logf("%#v", liste.elements)
+	malzwei := liste.Map(func(i int, v int) int {
+		return v * 2
+	})
+	t.Logf("%#v", malzwei.elements)
+	if malzwei.Len() != 7 {
+		t.Errorf("ERROR: Anzahl malzwei falsch: %d %#v", malzwei.Len(),
+			malzwei)
+	}
+	if malzwei.ElementAt(1) != 4 {
+		t.Error("ERROR: Element falsch:", malzwei.ElementAt(1))
+	}
+	if malzwei.ElementAt(4) != 10 {
+		t.Error("ERROR: Element falsch:", malzwei.ElementAt(4))
+	}
+
+}
