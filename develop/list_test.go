@@ -375,7 +375,6 @@ func TestMap(t *testing.T) {
 	if malzwei.ElementAt(4) != 10 {
 		t.Error("ERROR: Element falsch:", malzwei.ElementAt(4))
 	}
-
 }
 
 func TestAny(t *testing.T) {
@@ -396,7 +395,6 @@ func TestAny(t *testing.T) {
 	if gt10 == true {
 		t.Error("ERROR: Any gt10 falsch")
 	}
-
 }
 
 func TestAll(t *testing.T) {
@@ -417,5 +415,17 @@ func TestAll(t *testing.T) {
 	if gt5 == true {
 		t.Error("ERROR: All gt5 falsch")
 	}
+}
 
+func TestFold(t *testing.T) {
+
+	liste := NewMYTYPEList(1, 2, 3, 4, 5, 6, 7)
+	t.Logf("%#v", liste.elements)
+
+	summe := liste.Fold(func(sum int, i int, v int) int {
+		return sum + v
+	})
+	if summe != 28 {
+		t.Error("ERROR: Fold falsch: ", summe)
+	}
 }

@@ -147,4 +147,14 @@ func (l *{{.MyTypeShort}}List) All(f func(int, {{.MyType}}) bool) bool {
 	return true
 }
 
+// Fold iterates over the slice by calling the given function
+// providing the cumulated value, the slice index, and the value
+func (l *{{.MyTypeShort}}List) Fold(f func({{.MyType}}, int, {{.MyType}}) {{.MyType}}) {{.MyType}} {
+	var cum {{.MyType}}
+	for index, value := range l.elements {
+		cum = f(cum, index, value)
+	}
+	return cum
+}
+
 `

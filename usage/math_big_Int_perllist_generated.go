@@ -145,3 +145,13 @@ func (l *IntList) All(f func(int, big.Int) bool) bool {
 	return true
 }
 
+// Fold iterates over the slice by calling the given function
+// providing the cumulated value, the slice index, and the value
+func (l *IntList) Fold(f func(big.Int, int, big.Int) big.Int) big.Int {
+	var cum big.Int
+	for index, value := range l.elements {
+		cum = f(cum, index, value)
+	}
+	return cum
+}
+

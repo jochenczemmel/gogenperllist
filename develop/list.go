@@ -144,3 +144,13 @@ func (l *MYTYPEList) All(f func(int, MYTYPE) bool) bool {
 	}
 	return true
 }
+
+// Fold iterates over the slice by calling the given function
+// providing the cumulated value, the slice index, and the value
+func (l *MYTYPEList) Fold(f func(MYTYPE, int, MYTYPE) MYTYPE) MYTYPE {
+	var cum MYTYPE
+	for index, value := range l.elements {
+		cum = f(cum, index, value)
+	}
+	return cum
+}
