@@ -417,15 +417,15 @@ func TestAll(t *testing.T) {
 	}
 }
 
-func TestFold(t *testing.T) {
+func TestReduce(t *testing.T) {
 
 	liste := NewMYTYPEList(1, 2, 3, 4, 5, 6, 7)
 	t.Logf("%#v", liste.elements)
 
-	summe := liste.Fold(func(sum int, i int, v int) int {
+	summe := liste.Reduce(func(sum int, i int, v int) int {
 		return sum + v
 	})
 	if summe != 28 {
-		t.Error("ERROR: Fold falsch: ", summe)
+		t.Error("ERROR: Reduce falsch: ", summe)
 	}
 }

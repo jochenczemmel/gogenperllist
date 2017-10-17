@@ -147,12 +147,16 @@ func (l *{{.MyTypeShort}}List) All(f func(int, {{.MyType}}) bool) bool {
 	return true
 }
 
-// Fold iterates over the slice by calling the given function
+// Reduce iterates over the slice by calling the given function
 // providing the cumulated value, the slice index, and the value
-func (l *{{.MyTypeShort}}List) Fold(f func({{.MyType}}, int, {{.MyType}}) {{.MyType}}) {{.MyType}} {
+func (l *{{.MyTypeShort}}List) Reduce(f func({{.MyType}}, int, {{.MyType}}) {{.MyType}}) {{.MyType}} {
 	var cum {{.MyType}}
 	for index, value := range l.elements {
-		cum = f(cum, index, value)
+		if index == 0 {
+			cum = value
+		} else {
+			cum = f(cum, index, value)
+		}
 	}
 	return cum
 }

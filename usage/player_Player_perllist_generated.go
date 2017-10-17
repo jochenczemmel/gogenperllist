@@ -145,12 +145,16 @@ func (l *PlayerList) All(f func(int, Player) bool) bool {
 	return true
 }
 
-// Fold iterates over the slice by calling the given function
+// Reduce iterates over the slice by calling the given function
 // providing the cumulated value, the slice index, and the value
-func (l *PlayerList) Fold(f func(Player, int, Player) Player) Player {
+func (l *PlayerList) Reduce(f func(Player, int, Player) Player) Player {
 	var cum Player
 	for index, value := range l.elements {
-		cum = f(cum, index, value)
+		if index == 0 {
+			cum = value
+		} else {
+			cum = f(cum, index, value)
+		}
 	}
 	return cum
 }
