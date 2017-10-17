@@ -15,8 +15,13 @@ develop/
 	$> ./develop
 
 usage/
-	example for using gogenperllist (type: Player)
+	examples for using gogenperllist 
+
+	local type: Player
 	//go:generate gogenperllist Player
+
+	type: big.Int
+	//go:generate gogenperllist -import "math/big" Int
 
 	$> go generate
 	$> go build
