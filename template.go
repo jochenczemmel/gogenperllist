@@ -2,41 +2,43 @@ package main
 
 var code = `package {{.Package}}
 
-// {{.MyType}}List contains a slice of {{.MyType}} values
-type {{.MyType}}List struct {
+{{if .Import}}import "{{.Import}}" {{end}}
+
+// {{.MyTypeShort}}List contains a slice of {{.MyType}} values
+type {{.MyTypeShort}}List struct {
 	elements []{{.MyType}}
 }
 
-// New{{.MyType}}List creates a new List of {{.MyType}} values
+// New{{.MyTypeShort}}List creates a new List of {{.MyType}} values
 // with optional initial values
-func New{{.MyType}}List(values ...{{.MyType}}) *{{.MyType}}List {
-	return &{{.MyType}}List{values}
+func New{{.MyTypeShort}}List(values ...{{.MyType}}) *{{.MyTypeShort}}List {
+	return &{{.MyTypeShort}}List{values}
 }
 
 // Len returns the length of the underlying slice
-func (l *{{.MyType}}List) Len() int {
+func (l *{{.MyTypeShort}}List) Len() int {
 	return len(l.elements)
 }
 
 // Cap returns the capacity of the underlying slice
-func (l *{{.MyType}}List) Cap() int {
+func (l *{{.MyTypeShort}}List) Cap() int {
 	return cap(l.elements)
 }
 
 // Push appends an element at the end of the list
-func (l *{{.MyType}}List) Push(element {{.MyType}}) {
+func (l *{{.MyTypeShort}}List) Push(element {{.MyType}}) {
 	l.elements = append(l.elements, element)
 }
 
 // Unshift adds an element at the beginning of the list
-func (l *{{.MyType}}List) Unshift(element {{.MyType}}) {
+func (l *{{.MyTypeShort}}List) Unshift(element {{.MyType}}) {
 	newl := append([]{{.MyType}}{element}, l.elements...)
 	l.elements = newl
 }
 
 // Shift returns the first element and removes it from the list
 // returns zero value if list is empty
-func (l *{{.MyType}}List) Shift() {{.MyType}} {
+func (l *{{.MyTypeShort}}List) Shift() {{.MyType}} {
 	if len(l.elements) == 0 {
 		return *new({{.MyType}})
 	}
@@ -47,7 +49,7 @@ func (l *{{.MyType}}List) Shift() {{.MyType}} {
 
 // Pop returns the last element and removes it from the list
 // returns zero value if list is empty
-func (l *{{.MyType}}List) Pop() {{.MyType}} {
+func (l *{{.MyTypeShort}}List) Pop() {{.MyType}} {
 	if len(l.elements) == 0 {
 		return *new({{.MyType}})
 	}
@@ -59,7 +61,7 @@ func (l *{{.MyType}}List) Pop() {{.MyType}} {
 
 // Foreach iterates over the slice by calling the given function
 // providing the slice index and the value
-func (l *{{.MyType}}List) Foreach(f func(int, {{.MyType}})) {
+func (l *{{.MyTypeShort}}List) Foreach(f func(int, {{.MyType}})) {
 	for index, value := range l.elements {
 		f(index, value)
 	}
@@ -68,7 +70,7 @@ func (l *{{.MyType}}List) Foreach(f func(int, {{.MyType}})) {
 // PopChecked returns the last element and removes it from the list
 // returns the value and true if the list contains values,
 // else the zero value and false
-func (l *{{.MyType}}List) PopChecked() ({{.MyType}}, bool) {
+func (l *{{.MyTypeShort}}List) PopChecked() ({{.MyType}}, bool) {
 	if len(l.elements) == 0 {
 		r := new({{.MyType}})
 		return *r, false
@@ -79,7 +81,7 @@ func (l *{{.MyType}}List) PopChecked() ({{.MyType}}, bool) {
 // ShiftChecked returns the first element and removes it from the list
 // returns the value and true if the list contains values,
 // else the zero value and false
-func (l *{{.MyType}}List) ShiftChecked() ({{.MyType}}, bool) {
+func (l *{{.MyTypeShort}}List) ShiftChecked() ({{.MyType}}, bool) {
 	if len(l.elements) == 0 {
 		r := new({{.MyType}})
 		return *r, false
@@ -89,7 +91,7 @@ func (l *{{.MyType}}List) ShiftChecked() ({{.MyType}}, bool) {
 
 // ElementAt returns the element at the given position.
 // It panics if index is invalid (default slice behaviour)
-func (l *{{.MyType}}List) ElementAt(index int) {{.MyType}} {
+func (l *{{.MyTypeShort}}List) ElementAt(index int) {{.MyType}} {
 	return l.elements[index]
 }
 
@@ -97,8 +99,8 @@ func (l *{{.MyType}}List) ElementAt(index int) {{.MyType}} {
 // providing the slice index and the value
 // and returning a new List that contains all element where
 // the given function returned true
-func (l *{{.MyType}}List) Grep(f func(int, {{.MyType}}) bool) {{.MyType}}List {
-	result := {{.MyType}}List{}
+func (l *{{.MyTypeShort}}List) Grep(f func(int, {{.MyType}}) bool) {{.MyTypeShort}}List {
+	result := {{.MyTypeShort}}List{}
 	for index, value := range l.elements {
 		if f(index, value) {
 			result.elements = append(result.elements, value)
@@ -111,12 +113,38 @@ func (l *{{.MyType}}List) Grep(f func(int, {{.MyType}}) bool) {{.MyType}}List {
 // providing the slice index and the value
 // and returning a new List that contains all element
 // with the value returned by the function
-func (l *{{.MyType}}List) Map(f func(int, {{.MyType}}) {{.MyType}}) {{.MyType}}List {
-	result := {{.MyType}}List{}
+func (l *{{.MyTypeShort}}List) Map(f func(int, {{.MyType}}) {{.MyType}}) {{.MyTypeShort}}List {
+	result := {{.MyTypeShort}}List{}
 	for index, value := range l.elements {
 		result.elements = append(result.elements, f(index, value))
 	}
 	return result
+}
+
+// Any iterates over the slice by calling the given function
+// providing the slice index and the value
+// and returning true if one of the function results is true
+// else false
+func (l *{{.MyTypeShort}}List) Any(f func(int, {{.MyType}}) bool) bool {
+	for index, value := range l.elements {
+		if f(index, value) == true {
+			return true
+		}
+	}
+	return false
+}
+
+// All iterates over the slice by calling the given function
+// providing the slice index and the value
+// and returning true if alle of the function results are true
+// else false
+func (l *{{.MyTypeShort}}List) All(f func(int, {{.MyType}}) bool) bool {
+	for index, value := range l.elements {
+		if f(index, value) == false {
+			return false
+		}
+	}
+	return true
 }
 
 `

@@ -1,44 +1,44 @@
 package main
 
-// REPlACEIMPORT
 
-// MYTYPEList contains a slice of MYTYPE values
-type MYTYPEList struct {
-	elements []MYTYPE
+
+// PlayerList contains a slice of Player values
+type PlayerList struct {
+	elements []Player
 }
 
-// NewMYTYPEList creates a new List of MYTYPE values
+// NewPlayerList creates a new List of Player values
 // with optional initial values
-func NewMYTYPEList(values ...MYTYPE) *MYTYPEList {
-	return &MYTYPEList{values}
+func NewPlayerList(values ...Player) *PlayerList {
+	return &PlayerList{values}
 }
 
 // Len returns the length of the underlying slice
-func (l *MYTYPEList) Len() int {
+func (l *PlayerList) Len() int {
 	return len(l.elements)
 }
 
 // Cap returns the capacity of the underlying slice
-func (l *MYTYPEList) Cap() int {
+func (l *PlayerList) Cap() int {
 	return cap(l.elements)
 }
 
 // Push appends an element at the end of the list
-func (l *MYTYPEList) Push(element MYTYPE) {
+func (l *PlayerList) Push(element Player) {
 	l.elements = append(l.elements, element)
 }
 
 // Unshift adds an element at the beginning of the list
-func (l *MYTYPEList) Unshift(element MYTYPE) {
-	newl := append([]MYTYPE{element}, l.elements...)
+func (l *PlayerList) Unshift(element Player) {
+	newl := append([]Player{element}, l.elements...)
 	l.elements = newl
 }
 
 // Shift returns the first element and removes it from the list
 // returns zero value if list is empty
-func (l *MYTYPEList) Shift() MYTYPE {
+func (l *PlayerList) Shift() Player {
 	if len(l.elements) == 0 {
-		return *new(MYTYPE)
+		return *new(Player)
 	}
 	first := l.elements[0]
 	l.elements = l.elements[1:]
@@ -47,9 +47,9 @@ func (l *MYTYPEList) Shift() MYTYPE {
 
 // Pop returns the last element and removes it from the list
 // returns zero value if list is empty
-func (l *MYTYPEList) Pop() MYTYPE {
+func (l *PlayerList) Pop() Player {
 	if len(l.elements) == 0 {
-		return *new(MYTYPE)
+		return *new(Player)
 	}
 	lastIndex := len(l.elements) - 1
 	last := l.elements[lastIndex]
@@ -59,7 +59,7 @@ func (l *MYTYPEList) Pop() MYTYPE {
 
 // Foreach iterates over the slice by calling the given function
 // providing the slice index and the value
-func (l *MYTYPEList) Foreach(f func(int, MYTYPE)) {
+func (l *PlayerList) Foreach(f func(int, Player)) {
 	for index, value := range l.elements {
 		f(index, value)
 	}
@@ -68,9 +68,9 @@ func (l *MYTYPEList) Foreach(f func(int, MYTYPE)) {
 // PopChecked returns the last element and removes it from the list
 // returns the value and true if the list contains values,
 // else the zero value and false
-func (l *MYTYPEList) PopChecked() (MYTYPE, bool) {
+func (l *PlayerList) PopChecked() (Player, bool) {
 	if len(l.elements) == 0 {
-		r := new(MYTYPE)
+		r := new(Player)
 		return *r, false
 	}
 	return l.Pop(), true
@@ -79,9 +79,9 @@ func (l *MYTYPEList) PopChecked() (MYTYPE, bool) {
 // ShiftChecked returns the first element and removes it from the list
 // returns the value and true if the list contains values,
 // else the zero value and false
-func (l *MYTYPEList) ShiftChecked() (MYTYPE, bool) {
+func (l *PlayerList) ShiftChecked() (Player, bool) {
 	if len(l.elements) == 0 {
-		r := new(MYTYPE)
+		r := new(Player)
 		return *r, false
 	}
 	return l.Shift(), true
@@ -89,7 +89,7 @@ func (l *MYTYPEList) ShiftChecked() (MYTYPE, bool) {
 
 // ElementAt returns the element at the given position.
 // It panics if index is invalid (default slice behaviour)
-func (l *MYTYPEList) ElementAt(index int) MYTYPE {
+func (l *PlayerList) ElementAt(index int) Player {
 	return l.elements[index]
 }
 
@@ -97,8 +97,8 @@ func (l *MYTYPEList) ElementAt(index int) MYTYPE {
 // providing the slice index and the value
 // and returning a new List that contains all element where
 // the given function returned true
-func (l *MYTYPEList) Grep(f func(int, MYTYPE) bool) MYTYPEList {
-	result := MYTYPEList{}
+func (l *PlayerList) Grep(f func(int, Player) bool) PlayerList {
+	result := PlayerList{}
 	for index, value := range l.elements {
 		if f(index, value) {
 			result.elements = append(result.elements, value)
@@ -111,8 +111,8 @@ func (l *MYTYPEList) Grep(f func(int, MYTYPE) bool) MYTYPEList {
 // providing the slice index and the value
 // and returning a new List that contains all element
 // with the value returned by the function
-func (l *MYTYPEList) Map(f func(int, MYTYPE) MYTYPE) MYTYPEList {
-	result := MYTYPEList{}
+func (l *PlayerList) Map(f func(int, Player) Player) PlayerList {
+	result := PlayerList{}
 	for index, value := range l.elements {
 		result.elements = append(result.elements, f(index, value))
 	}
@@ -123,7 +123,7 @@ func (l *MYTYPEList) Map(f func(int, MYTYPE) MYTYPE) MYTYPEList {
 // providing the slice index and the value
 // and returning true if one of the function results is true
 // else false
-func (l *MYTYPEList) Any(f func(int, MYTYPE) bool) bool {
+func (l *PlayerList) Any(f func(int, Player) bool) bool {
 	for index, value := range l.elements {
 		if f(index, value) == true {
 			return true
@@ -136,7 +136,7 @@ func (l *MYTYPEList) Any(f func(int, MYTYPE) bool) bool {
 // providing the slice index and the value
 // and returning true if alle of the function results are true
 // else false
-func (l *MYTYPEList) All(f func(int, MYTYPE) bool) bool {
+func (l *PlayerList) All(f func(int, Player) bool) bool {
 	for index, value := range l.elements {
 		if f(index, value) == false {
 			return false
@@ -144,3 +144,4 @@ func (l *MYTYPEList) All(f func(int, MYTYPE) bool) bool {
 	}
 	return true
 }
+

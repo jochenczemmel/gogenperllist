@@ -240,7 +240,7 @@ func TestPop(t *testing.T) {
 	}
 }
 
-func TestAll(t *testing.T) {
+func TestMore(t *testing.T) {
 	liste := NewMYTYPEList(1, 2, 3, 4, 5)
 	t.Logf("%#v", liste.elements)
 	if liste.Len() != 5 {
@@ -357,6 +357,7 @@ func TestGrep(t *testing.T) {
 			ungerade)
 	}
 }
+
 func TestMap(t *testing.T) {
 	liste := NewMYTYPEList(1, 2, 3, 4, 5, 6, 7)
 	t.Logf("%#v", liste.elements)
@@ -373,6 +374,48 @@ func TestMap(t *testing.T) {
 	}
 	if malzwei.ElementAt(4) != 10 {
 		t.Error("ERROR: Element falsch:", malzwei.ElementAt(4))
+	}
+
+}
+
+func TestAny(t *testing.T) {
+
+	liste := NewMYTYPEList(1, 2, 3, 4, 5, 6, 7)
+	t.Logf("%#v", liste.elements)
+
+	gt5 := liste.Any(func(i int, v int) bool {
+		return v > 5
+	})
+	if gt5 == false {
+		t.Error("ERROR: Any gt5 falsch")
+	}
+
+	gt10 := liste.Any(func(i int, v int) bool {
+		return v > 10
+	})
+	if gt10 == true {
+		t.Error("ERROR: Any gt10 falsch")
+	}
+
+}
+
+func TestAll(t *testing.T) {
+
+	liste := NewMYTYPEList(1, 2, 3, 4, 5, 6, 7)
+	t.Logf("%#v", liste.elements)
+
+	gt0 := liste.All(func(i int, v int) bool {
+		return v > 0
+	})
+	if gt0 == false {
+		t.Error("ERROR: All gt0 falsch")
+	}
+
+	gt5 := liste.All(func(i int, v int) bool {
+		return v > 5
+	})
+	if gt5 == true {
+		t.Error("ERROR: All gt5 falsch")
 	}
 
 }

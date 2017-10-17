@@ -39,6 +39,13 @@ func write(code, filename string) {
 func replace(in string) string {
 	out := regexp.MustCompile("package main").ReplaceAllString(in,
 		"package {{.Package}}")
+	out = regexp.MustCompile("// REPlACEIMPORT").ReplaceAllString(out,
+		`{{if .Import}}import "{{.Import}}" {{end}}`)
+	out = regexp.MustCompile("NewMYTYPE").ReplaceAllString(out,
+		"New{{.MyTypeShort}}")
+	out = regexp.MustCompile("MYTYPEList").ReplaceAllString(out,
+		"{{.MyTypeShort}}List")
+
 	return regexp.MustCompile("MYTYPE").ReplaceAllString(out,
 		"{{.MyType}}")
 }
